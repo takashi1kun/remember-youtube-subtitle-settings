@@ -169,14 +169,24 @@
         return;
       }
 
-      let language = settings.preferredLanguageCodes
+      let lang = settings.preferredLanguageCodes
+        .map(preferredLanguageCode =>
+          languages.find(language => (
+            language?.languageCode == preferredLanguageCode &&
+            settings.showGeneratedCaption
+          ))
+        )
+      if(lang.length == 0){
+
+      lang = settings.preferredLanguageCodes
         .map(preferredLanguageCode =>
           languages.find(language => (
             language?.languageCode?.startsWith(preferredLanguageCode) &&
             (settings.showGeneratedCaption || language.kind !== 'asr')
           ))
         )
-        .find(language => language);
+}
+      let language = lang.find(language => language);
 
       if (!language && settings.showTranslatedCaption) {
         // console.log(`No "${settings.preferredLanguageCodes}" captions found. Searching for translateable captions`, languages);
