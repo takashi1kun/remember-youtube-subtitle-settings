@@ -100,7 +100,13 @@
         // console.warn('Cannot set caption. No #movie_player found on the page.');
         return;
       }
-
+      let audioTracks = player.getAvailableAudioTracks();
+      if(audioTracks.length > 1){
+        let englishAudio = audioTracks.find(x => x.Nc.id == 'en.0');
+        if (englishAudio != undefined){
+          player.setAudioTrack(englishAudio)
+        }
+    }
       // var title = document.querySelector('.title')?.textContent;
       // var excludedTitle = ignoreTitles.find(substring => title.indexOf(substring) !== -1);
       // if (excludedTitle) {
